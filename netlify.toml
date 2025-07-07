@@ -1,0 +1,17 @@
+# Netlify configuration file
+[build]
+  publish = "."
+
+# Redirect www to non-www
+[[redirects]]
+  from = "https://www.syaiton.com/*"
+  to = "https://syaiton.com/:splat"
+  status = 301
+  force = true
+
+# Ensure index.html is served for root
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
