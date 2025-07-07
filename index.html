@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page In Progress</title>
+    <style>
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            position: relative;
+            padding: 20px;
+        }
+        
+        .skull-container {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .skull {
+            font-size: 8px;
+            line-height: 1;
+            white-space: pre;
+            font-weight: normal;
+            letter-spacing: 0px;
+            text-shadow: 0 0 2px currentColor;
+            position: relative;
+            z-index: 2;
+            font-family: monospace;
+            transform: scale(0.8);
+        }
+        
+        /* Color variations for different ASCII characters */
+        .skull-container:hover .skull {
+            animation: colorShift 2s ease-in-out infinite;
+        }
+        
+        @keyframes colorShift {
+            0% { 
+                color: #0f0; 
+                text-shadow: 0 0 5px #0f0;
+            }
+            25% { 
+                color: #fff; 
+                text-shadow: 0 0 10px #fff;
+            }
+            50% { 
+                color: #f00; 
+                text-shadow: 0 0 15px #f00;
+            }
+            75% { 
+                color: #ff0; 
+                text-shadow: 0 0 10px #ff0;
+            }
+            100% { 
+                color: #0f0; 
+                text-shadow: 0 0 5px #0f0;
+            }
+        }        
+        .digital-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.2;
+        }
+        
+        .rain-column {
+            position: absolute;
+            top: -100%;
+            font-size: 14px;
+            line-height: 1.1;
+            animation: rain-fall linear infinite;
+            color: #0f0;
+            white-space: pre;
+            font-family: monospace;
+        }
+        
+        @keyframes rain-fall {
+            to { transform: translateY(200vh); }
+        }
+        
+        .glitch {
+            animation: glitch 0.5s ease-in-out;
+        }        
+        @keyframes glitch {
+            0%, 100% { 
+                filter: none; 
+                transform: scale(0.8);
+            }
+            20% { 
+                filter: hue-rotate(90deg) saturate(2); 
+                transform: scale(0.8) translateX(-3px);
+            }
+            40% { 
+                filter: hue-rotate(-90deg) saturate(2); 
+                transform: scale(0.8) translateX(3px);
+            }
+            60% { 
+                filter: contrast(2) brightness(1.5); 
+                transform: scale(0.8) translateY(-3px);
+            }
+        }
+        
+        /* Special effect for @ symbols (eyes) */
+        .skull.eye-glow {
+            animation: eyeGlow 1s ease-in-out;
+        }
+        
+        @keyframes eyeGlow {
+            0%, 100% { filter: none; }
+            50% { 
+                filter: drop-shadow(0 0 20px #f00) contrast(2);
+            }
+        }        
+        /* Scan line effect */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #0f0, transparent);
+            animation: scan 3s linear infinite;
+            z-index: 3;
+            opacity: 0.5;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="digital-rain" id="rain"></div>
+    <div class="scan-line"></div>
+    
+    <div class="container">
+        <div class="skull-container" id="skullContainer">
+            <pre class="skull" id="skull">....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................................................................     ...............................................
+.........................................       ....        ........................................
+....................................     .:-=+*######**+=-:.    ....................................
+..................................   :-+****++=---:--==+*****=:.   .................................
+...............................   :=*#*=-:...           ...:=+*#*-.  ...............................
+..............................  -*#*-:..      .........      ..:=*#+.  .............................
+............................  :*%*-.    .....................    :=#%=. ............................
+...........................  =%+::=: .......................... .--.-##. ...........................
+........................... +%:   :-. ........................  :-.  .+%: ..........................
+.......................... =%: ... :-.  ..................... .:-. .. .+%. .........................
+......................... :%=. .... :--. ................... :-:. .... .#+ .........................
+............       ...... +#: .....   .:.   .............  ..:    .... .=%. .....        ...........
+..........  .::-::.  .... #*. ...  .....-...  ......... ...:-..... .... :%- ...  ..::-::.  .........
+......... :+*+==+*#*: ..  #+  .. .--::..-.::............:::::..:--:.... :%- ....=#*++==+*=..........
+........ .%*:     .*%. .  ##: ...:.    ..    ...........    .    .::.. .=@- .. =@-      =%+ ........
+........ -@#*-:.:-=#%. .. *%=. ..  :-=+=+++=-:.      ..-=+++=+==:.  . .-+@: .  =@+-::::=##%. .......
+........ .##**#+:-*%#=.   +@--. .=%@@@@@@@@@@@%=:::.:#@@@@@@@@@@@%*: .:-+@.  .-*##=--##*#%= ........
+........ .:-=+#+:  :+##+-:-@=--.+@@@@@@@@@@@@@@%:::.+@@@@@@@@@@@@@@@::=-##.-=*#*-.  =**=-:. ........
+......... ...=%##-.  .:-=+*@*-*:%@@@@@@@@@@@@@@@=. .%@@@@@@@@@@@@@@@=++-@#*+=-:. ..+%##:.. .........
+..........  +%*=:.. .=-....+%-%=%@@@@@@@@@@@@@@%-==-+@@@@@@@@@@@@@@@=#*+%:...:--  ..-+#%: ..........
+..........  ##*++===*@@%**--@%@:%@@@@@@@@@@@@@@==**+=*@@@@@@@@@@@@@@=+@@#:+*#@@%+===+**@- ..........
+........... -%%%###%%###%%%%@@- %@@@@@@@@@@@%%-.#@@@=.*%%@@@@@@@@@@@=.*@@%%%####%%###%%*. ..........
+........... .-+*###*+===+**%@- .=%@@@@@@@#*+-..=@@@@%:.:=+#%@@@@@@@*: .*@#*+===+*###*+=:............
+............ ...::::......:*%-:..:=+++===-=-..=@@@@@@*- :======+++-...-+@-.......::::... ...........
+.............  .....      .:%#+=::..::----:. :#@@@@@@@=. .:---::...:-+*%+.       ....  .............
+................. ........ .:#%########+-.  .-@@@%*@@@#..  .=*########%+. ........  ................
+................ .........   .=%%%%%@%@%*==.-+%%*-:+%@#=.:=+%%@@@%#%%*:.  .........  ...............
+..............  .         ..-+*@#=*%@%%@*+@--=::::.-::-+.##+%@#@@#==@%+=:.         ..  .............
+............. -***=:..:-=+**+=:=*-:+@#@@==+..   .:..   ..-+-*@%%#-.+*:-=***=-:..:-+**+. ............
+............ -#=::-===+=--: .:=*%%:+@%@*=:... .. . . . ....-=%@#@:+@#+-. .--====+=:.-**. ...................... .#*+--=-..  .-=*%@%%#%+=%#@**==:-.=..--:.--.--=+*%@#%:%##%@@#+=:   .:==--*#+ ...........
+........... .##@*=.   .=*@@%#***+@=.%#@%++***++*:+*-=#=****+*@%%+.%*+***#%@%+-.  .-+%%#+ ...........
+...........  -**:  .-*%%####*=-:-@: =%%##*++-+:* -# -+:*-++*#%%#. *#::=+*####@#=:  .=#=.  ..........
+.........  :+*-. :=#@#*#%*=-:.. ##-:.-*#+*+*=#=%=+#=*#=*=**+**+.::+@-...:-+#%**@%*-. :+*=. .........
+..........+%+. .-+%@#+@*-:...   =%#+: :-.=*++*:#:=#:+==*+*+-.-..=*%#.   ...:=%#+@@#=:..-*#: ........
+........ -@=:  .:*@#%@+...  ... .=%@+... .:.=:*=====-+-:-..  ..-#%*:. ..   ..-%@#%%=.. .-##. .......
+........ :%#+=--+%@*#+..  ........:+%=:.    . ...-:: .. .   .:-*#=:. ......  .:#*%@*=--=+%+ ........
+........ .-*#%%%%%*+-............ ..+%#*+=-.    .. .    .:-=+*%#-.. ......... .:=*#%%%%##=. ........
+......... ..:--=--::. ............  .-+#%#%%*.   ..   .-#%##%#=:. ............ ..:------:...........
+..........  ........ ..................:=*#%%+--=*#+--=#@%#+-:.. ............... ........ ..........
+............       ..................  ..:-+*************=:...  .................       ............
+.......................................  ...::::.....:::...  .......................................
+..........................................  ....     ...   .........................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................</pre>
+            <div class="message" id="message" style="display: none;"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Create matrix rain with skull-related characters
+        const rainContainer = document.getElementById('rain');
+        const columns = Math.floor(window.innerWidth / 15);
+        const skullChars = ['@', '#', '%', '*', '+', '=', '-', ':', '.', '1', '0'];        
+        for (let i = 0; i < columns; i++) {
+            const column = document.createElement('div');
+            column.className = 'rain-column';
+            column.style.left = i * 15 + 'px';
+            column.style.animationDuration = (Math.random() * 20 + 10) + 's';
+            column.style.animationDelay = Math.random() * 5 + 's';
+            
+            // Generate random character string from skull characters
+            let content = '';
+            for (let j = 0; j < 60; j++) {
+                content += skullChars[Math.floor(Math.random() * skullChars.length)];
+                content += '\n';
+            }
+            column.textContent = content;
+            
+            rainContainer.appendChild(column);
+        }
+        
+        // Skull interactions
+        const skullContainer = document.getElementById('skullContainer');
+        const skull = document.getElementById('skull');
+        let clickCount = 0;
+        
+        skullContainer.addEventListener('click', function() {
+            clickCount++;
+            this.classList.add('glitch');
+            
+            // Message functionality removed per request
+                        
+            // Special effects at certain clicks
+            if (clickCount % 3 === 0) {
+                // Eye glow effect
+                skull.classList.add('eye-glow');
+                setTimeout(() => {
+                    skull.classList.remove('eye-glow');
+                }, 1000);
+            }
+            
+            if (clickCount % 5 === 0) {
+                // Invert effect
+                document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+                setTimeout(() => {
+                    document.body.style.filter = 'none';
+                }, 300);
+            }
+            
+            if (clickCount % 7 === 0) {
+                // Character transformation
+                const originalText = skull.textContent;
+                const chars = originalText.split('');
+                let transformedText = '';
+                
+                chars.forEach(char => {
+                    if (char === '@') transformedText += '☠';
+                    else if (char === '#') transformedText += '█';
+                    else if (char === '%') transformedText += '▓';
+                    else if (char === '*') transformedText += '▒';
+                    else transformedText += char;
+                });                
+                skull.textContent = transformedText;
+                
+                setTimeout(() => {
+                    skull.textContent = originalText;
+                }, 1500);
+            }
+            
+            setTimeout(() => {
+                this.classList.remove('glitch');
+            }, 2000);
+        });
+        
+        // Mouse tracking for parallax
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 5;
+            const y = (e.clientY / window.innerHeight - 0.5) * 5;
+            
+            skullContainer.style.transform = `translateX(${x}px) translateY(${y}px)`;
+        });
+        
+        // Keyboard easter eggs
+        let keySequence = [];
+        document.addEventListener('keydown', (e) => {
+            keySequence.push(e.key);
+            keySequence = keySequence.slice(-10);
+            
+            // Type "death" for special effect
+            if (keySequence.join('').includes('death')) {                skull.style.color = '#f00';
+                skull.style.textShadow = '0 0 30px #f00, 0 0 60px #f00';
+                document.body.style.backgroundColor = '#110000';
+                
+                setTimeout(() => {
+                    skull.style.color = '';
+                    skull.style.textShadow = '';
+                    document.body.style.backgroundColor = '';
+                }, 3000);
+                
+                keySequence = [];
+            }
+            
+            // Type "life" for opposite effect
+            if (keySequence.join('').includes('life')) {
+                skull.style.color = '#0ff';
+                skull.style.textShadow = '0 0 30px #0ff, 0 0 60px #0ff';
+                document.body.style.backgroundColor = '#001111';
+                
+                setTimeout(() => {
+                    skull.style.color = '';
+                    skull.style.textShadow = '';
+                    document.body.style.backgroundColor = '';
+                }, 3000);
+                
+                keySequence = [];
+            }
+        });
+    </script>
+</body>
+</html>
